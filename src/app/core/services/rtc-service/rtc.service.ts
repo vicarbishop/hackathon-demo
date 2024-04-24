@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { app } from "../../../../../server";
+import { environment } from "../../../../../environments/environment";
 
 @Injectable({
     providedIn: "root",
@@ -86,9 +87,11 @@ import { app } from "../../../../../server";
     }
     createPeer(){
       var peerObj = new this.peer(this.username, {
-        host: location.hostname,
-        port: location.port || (location.protocol === 'https:' ? 443 : 80),
-        path: '/peerjs'
+        host: environment.hostName,
+        port: 900,
+        path: 'myapp',
+        key: 'hackathon',
+        proxied: true
       });
       this.peer.on("open", () => {
         this.screen = "chat"; 

@@ -1,5 +1,7 @@
+
 export const environment = {
-  production: true,
+  production: false,
   appVersion: '0.0.0',
-  chatGPTApiKey: ''
+  chatGPTApiKey: '',
+  hostName: 'ec2-3-131-37-201.us-east-2.compute.amazonaws.com',
 };
