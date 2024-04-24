@@ -4,4 +4,16 @@ import { Injectable } from "@angular/core";
     providedIn: "root",
   })
   
-  export class RtcService {}
+  export class RtcService {
+    getUsername(){}
+    createConnection(){}
+    endConnection(){}
+    updatePeer(){}
+    disconnectPeer(){}
+    configConnection(){}
+    initConnection(){}
+    createPeer(){}
+    submitLogin(){}
+    receiveChat(){}
+    submitChat(){}
+  }
