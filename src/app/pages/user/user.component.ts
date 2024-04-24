@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RtcService } from '../../core/rtc-service/rtc.service';
+import { RtcService } from '../../core/services/rtc-service/rtc.service';
 
 @Component({
   selector: 'app-user',
