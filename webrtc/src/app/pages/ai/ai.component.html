@@ -1,0 +1,26 @@
+
+<main class="main" class="py-20">
+    
+    <div class="container flex flex-wrap content-evenly	">
+        <button class="btn btn-grey">Turn On Camera</button>
+        <button class="btn btn-grey">Hang Up</button>
+    </div>
+    <div class="container flex flex-wrap content-evenly	">
+        <div class="w-full sm:w-1/2 ml-auto md:w-1/2 lg:w-1/2 xl:w-1/2 mb-4 h-12 text-center"> 
+           <div id="send">
+             
+    <video id="localVideo" playsinline autoplay muted></video>
+             <textarea id="dataChannelSend" placeholder="Press Start, enter some text, then press Send."></textarea>
+           
+        <button id="sendButton" class="btn btn-gray float-right" >Send</button>
+            </div>
+        </div> 
+        <div class="w-full sm:w-1/2  ml-auto md:w-1/2 lg:w-1/2 xl:w-1/2 mb-4 h-12  text-center ">
+            <div id="receive">
+               
+    <video id="remoteVideo" playsinline autoplay></video>
+                <textarea id="dataChannelReceive" disabled></textarea>
+            </div>
+        </div>      
+    </div>
+</main>
