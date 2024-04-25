@@ -17,7 +17,7 @@ export class RtcService {
   chatMessageInput!: string;
 
   getUsername(user: string) {
-    this.username = user;
+    this.username = this.appPrefix + user;
     return this.username;
   }
   createConnection(conn: any) {
