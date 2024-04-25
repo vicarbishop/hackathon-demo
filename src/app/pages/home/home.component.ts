@@ -13,7 +13,6 @@ export class HomeComponent {
   chatType: ChatType | undefined;
 
   handleSetChat(e: any) {
-    debugger;
     this.chatType = ChatType.USER;
   }
 }

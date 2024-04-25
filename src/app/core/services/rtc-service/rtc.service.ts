@@ -1,45 +1,59 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
+import { Peer } from 'peerjs';
+
 @Injectable({
   providedIn: 'root',
 })
-export class RtcService {
+export class RtcService implements OnInit {
   appPrefix = 'secure-p2p-multichat-';
-  screen: string = 'login';
-  username!: string;
-  peerError: string = '';
-  loading: boolean = false;
-  peer: any = {};
-  targetIdInput: string = '';
-  peerIds!: string[];
-  connections: any = {};
-  chats!: any;
-  chatMessageInput!: string;
+  data: any = {   
+    screen: 'login',
+    username: '',
+    peerError:  '',
+    loading: false,
+    peer: {},
+    targetIdInput: '',
+    peerIds: [],
+    connections: {},
+    chats: {},
+    chatMessageInput: ''
+  }
+  ngOnInit(): void {
+    
+    navigator.mediaDevices
+      .getUserMedia({ video: false, audio: false })
+      
+      if (typeof navigator !== "undefined") {
+        const Peer = require("peerjs").default
+      }
+  }
 
   getUsername(user: string) {
-    this.username = this.appPrefix + user;
-    return this.username;
+    this.data.username = this.appPrefix + user;
+    return this.data.username;
   }
   createConnection(conn: any) {
-    this.connections[conn.peer] = conn;
+    this.data.connections[conn.peer] = conn;
     this.updatePeerIds();
   }
   endConnection(conn: any) {
-    this.connections.removeItem(conn.peer);
+    this.data.connections.removeItem(conn.peer);
     this.updatePeerIds();
   }
   updatePeerIds() {
-    this.peerIds = Object.keys(this.connections);
+    this.data.peerIds = Object.keys(this.data.connections);
   }
   disconnectPeer() {
-    this.peer.disconnect();
+    this.data.peer.disconnect();
   }
+  
   configConnection(conn: any) {
     conn.on('data', (data: any) => {
       // if data is about connections (the list of peers sent when connected)
       if (data.type === 'connections') {
         data.peerIds.forEach((peerId: any) => {
-          if (!this.connections[peerId]) {
+          if (!this.data.connections[peerId]) {
             this.initConnection(peerId);
           }
         });
@@ -53,60 +67,54 @@ export class RtcService {
 
     // if the caller joins have a call, we merge calls
     conn.metadata.peerIds.forEach((peerId: any) => {
-      if (!this.connections[peerId]) {
+      if (!this.data.connections[peerId]) {
         this.initConnection(peerId);
       }
     });
   }
   initConnection(peerId: string) {
-    if (!this.peerIds.includes(peerId) && peerId !== this.peer.id) {
-      this.loading = true;
-      this.peerError = '';
+    if (!this.data.peerIds.includes(peerId) && peerId !== this.data.peer.id) {
+      this.data.loading = true;
+      this.data.peerError = '';
 
       const options = {
         metadata: {
-          peerIds: this.peerIds,
+          peerIds: this.data.peerIds,
         },
         serialization: 'json',
       };
 
-      const conn = this.peer.connect(peerId, options);
+      const conn = this.data.peer.connect(peerId, options);
       this.configConnection(conn);
 
       conn.on('open', () => {
         this.createConnection(conn);
-        if (this.getUsername(conn.peer) === this.targetIdInput) {
-          this.targetIdInput = '';
-          this.loading = false;
+        if (this.getUsername(conn.peer) === this.data.targetIdInput) {
+          this.data.targetIdInput = '';
+          this.data.loading = false;
         }
       });
     }
   }
   createPeer() {
-    var peerObj = new this.peer(this.username, {
-      host: environment.hostName,
-      port: 900,
-      path: 'myapp',
-      key: 'hackathon',
-      proxied: true,
+    this.data.peer= new Peer("pick-an-id");
+    this.data.peer.on('open', () => {
+      this.data.screen = 'chat';
+      this.data.loading = false;
+      this.data.peerError = '';
     });
-    this.peer.on('open', () => {
-      this.screen = 'chat';
-      this.loading = false;
-      this.peerError = '';
-    });
-    this.peer.on('error', (error: any) => {
+    this.data.peer.on('error', (error: any) => {
       if (error.type === 'peer-unavailable') {
-        this.loading = false;
-        this.peerError = `${this.targetIdInput} is unreachable!`;
-        this.targetIdInput = '';
+        this.data.loading = false;
+        this.data.peerError = `${this.data.targetIdInput} is unreachable!`;
+        this.data.targetIdInput = '';
       } else if (error.type === 'unavailable-id') {
-        this.loading = false;
-        this.peerError = `${this.username} is already taken!`;
-      } else this.peerError = error;
+        this.data.loading = false;
+        this.data.peerError = `${this.data.username} is already taken!`;
+      } else this.data.peerError = error;
     });
-    this.peer.on('connection', (conn: any) => {
-      if (!this.peerIds.includes(conn.peer)) {
+    this.data.peer.on('connection', (conn: any) => {
+      if (!this.data.peerIds.includes(conn.peer)) {
         this.configConnection(conn);
 
         conn.on('open', () => {
@@ -114,41 +122,42 @@ export class RtcService {
 
           conn.send({
             type: 'connections',
-            peerIds: this.peerIds,
+            peerIds: this.data.peerIds,
           });
         });
       }
     });
   }
   submitLogin(user: string) {
-    if (!this.loading) {
-      this.loading = true;
-      this.peerError = '';
-      this.username = user;
+    if (!this.data.loading) {
+      this.data.loading = true;
+      this.data.peerError = '';
+      this.data.username = user;
       this.createPeer();
     }
   }
   receiveChat(chatMessage: string) {
-    this.chats.push(chatMessage);
-    localStorage.setItem('chats', JSON.stringify(this.chats));
+    this.data.chats.push(chatMessage);
+    localStorage.setItem('chats', JSON.stringify(this.data.chats));
   }
   submitChat(chatMessage: string) {
-    if (this.chatMessageInput.length > 0) {
+    if (this.data.chatMessageInput.length > 0) {
       let chat = {
-        sender: this.username,
-        message: this.chatMessageInput,
+        sender: this.data.username,
+        message: this.data.chatMessageInput,
         timestamp: new Date().getTime(),
       };
 
       this.receiveChat(chatMessage);
-      Object.values(this.connections).forEach((conn: any) => {
+      Object.values(this.data.connections).forEach((conn: any) => {
         conn.send({
           type: 'chat',
           chat,
         });
       });
 
-      this.chatMessageInput = '';
+      this.data.chatMessageInput = '';
     }
   }
+
 }
