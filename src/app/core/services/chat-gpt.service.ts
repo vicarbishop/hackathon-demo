@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: "root",
-  })
-  
-  export class ChatGPTService {
-    // test
-  }
+  providedIn: 'root',
+})
+export class ChatGPTService {
+  // test 2
+}
