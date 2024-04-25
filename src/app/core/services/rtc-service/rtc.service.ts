@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,6 +17,18 @@ export class RtcService {
   connections: any = {};
   chats!: any;
   chatMessageInput!: string;
+  userList!: string[];
+
+  constructor(private http: HttpClient) { }
+
+  public getUserList(): Observable<any[]> {
+    let url: string = `${environment.hostName}:9000/myapp/:key/peers`;
+    return this.http.get<any[]>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
   getUsername(user: string) {
     this.username = user;
@@ -85,7 +99,7 @@ export class RtcService {
   createPeer() {
     var peerObj = new this.peer(this.username, {
       host: environment.hostName,
-      port: 900,
+      port: 9000,
       path: 'myapp',
       key: 'hackathon',
       proxied: true,
