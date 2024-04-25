@@ -1,1 +1,15 @@
-<p>ai-chat works!</p>
+<div
+  class="rounded-lg border border-black border-solid w-full flex flex-col justify-between"
+>
+  <div class="p-4 w-full h-full min-h-80">Chat messages appear here.</div>
+  <div
+    class="cursor-pointer bg-green-400 text-white flex justify-center w-full px-2 py-3"
+    (mousedown)="setRecording(true)"
+    (mouseup)="setRecording(false)"
+    (mouseleave)="setRecording(false)"
+    [ngClass]="{ 'bg-green-200': isRecording }"
+  >
+    Push to talk
+  </div>
+  <audio controls id="playback"></audio>
+</div>
