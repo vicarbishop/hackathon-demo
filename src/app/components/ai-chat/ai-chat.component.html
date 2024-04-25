@@ -1,15 +1,31 @@
 <div
-  class="rounded-lg border border-black border-solid w-full flex flex-col justify-between"
+  class="rounded-lg border border-black border-solid flex flex-col justify-between max-w-[300px] w-[300px]"
 >
-  <div class="p-4 w-full h-full min-h-80">Chat messages appear here.</div>
-  <div
-    class="cursor-pointer bg-green-400 text-white flex justify-center w-full px-2 py-3"
-    (mousedown)="setRecording(true)"
-    (mouseup)="setRecording(false)"
-    (mouseleave)="setRecording(false)"
-    [ngClass]="{ 'bg-green-200': isRecording }"
-  >
-    Push to talk
+  <div class="p-4 w-full h-full min-h-80 flex flex-col py-2">
+    <div *ngFor="let msg of messageQueue">
+      <span>{{ msg.sender }}: {{ msg.message }}</span>
+    </div>
   </div>
-  <audio controls id="playback"></audio>
+  <div class="flex flex-col">
+    <div class="flex w-full">
+      <textarea
+        [(ngModel)]="textAreaMsg"
+        class="border border-solid border-gray-400 flex-grow resize-none"
+        rows="3"
+      ></textarea>
+      <button class="bg-black text-white w-20 my-2" (click)="sendTextMessage()">
+        Submit
+      </button>
+    </div>
+    <div class="w-full flex justify-center">- OR -</div>
+    <div
+      class="cursor-pointer bg-green-400 text-white flex justify-center w-full px-2 py-3"
+      (mousedown)="setRecording(true)"
+      (mouseup)="setRecording(false)"
+      [ngClass]="{ 'bg-green-200': isRecording }"
+    >
+      Push to talk
+    </div>
+    <audio controls id="playback"></audio>
+  </div>
 </div>
