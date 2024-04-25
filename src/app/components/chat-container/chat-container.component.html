@@ -1,0 +1,9 @@
+<div>
+  <div *ngIf="chatType == ChatType.AI">
+    <app-ai-chat></app-ai-chat>
+  </div>
+  <div *ngIf="chatType == ChatType.USER">
+    <app-user-chat></app-user-chat>
+  </div>
+  <div *ngIf="!chatType">Chat could not be loaded.</div>
+</div>

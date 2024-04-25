@@ -1,4 +1,15 @@
-<div class="flex flex-col items-left max-w-640 px-0 py-0">
+<div class="w-full h-full flex gap-x-4 justify-center">
+  <app-user-list
+    (setChat)="handleSetChat($event)"
+    class="cursor-pointer"
+  ></app-user-list>
+  <app-chat-container
+    [chatType]="chatType"
+    class="cursor-pointer"
+  ></app-chat-container>
+</div>
+
+<!--<div class="flex flex-col items-left max-w-640 px-0 py-0">
     <div class="w-full md:w-1/2 flex flex-col items-center h-64" style = "justify-content: center" >
         <div class="w-full px-4">
             <div class="flex flex-col items-center relative">
@@ -67,15 +78,15 @@
   <div style="box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);"
     class="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-white p-10 rounded-lg border border-[#e5e7eb] w-fit py-0">
 
-    <!-- Heading -->
+    Heading
     <div class="flex flex-col space-y-1.5 pb-6">
       <h2 class="font-semibold text-lg tracking-tight">Chatbox</h2>
     </div>
 
 
-    <!-- Chat Container -->
+   Chat Container
     <div class="pr-4 h-[474px]" style="min-width: 100%; display: table;">
-      <!-- Chat Message AI -->
+     Chat Message AI 
       <div class="flex gap-3 my-4 text-gray-600 text-sm flex-1"><span
           class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
           <div class="rounded-full bg-gray-100 border p-1"><svg stroke="none" fill="black" stroke-width="1.5"
@@ -89,7 +100,7 @@
         </p>
       </div>
 
-      <!--  User Chat Message -->
+       User Chat Message
       <div class="flex gap-3 my-4 text-gray-600 text-sm flex-1"><span
           class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
           <div class="rounded-full bg-gray-100 border p-1"><svg stroke="none" fill="black" stroke-width="0"
@@ -101,7 +112,7 @@
         </span>
         <p class="leading-relaxed"><span class="block font-bold text-gray-700">You </span>fewafef</p>
       </div>
-      <!-- Ai Chat Message  -->
+       Ai Chat Message 
       <div class="flex gap-3 my-4 text-gray-600 text-sm flex-1"><span
           class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
           <div class="rounded-full bg-gray-100 border p-1"><svg stroke="none" fill="black" stroke-width="1.5"
@@ -116,7 +127,7 @@
           this in the verified sources.</p>
       </div>
     </div>
-    <!-- Input box  -->
+     Input box  
     <div class="flex items-center pt-0 pb-1">
       <form class="flex items-center justify-center w-full space-x-2">
         <input
@@ -128,4 +139,4 @@
       </form>
     </div>
 
-  </div>
+  </div>-->
