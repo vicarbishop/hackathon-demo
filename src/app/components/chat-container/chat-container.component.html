@@ -5,5 +5,5 @@
   <div *ngIf="chatType == ChatType.USER">
     <app-user-chat></app-user-chat>
   </div>
-  <div *ngIf="!chatType">Chat could not be loaded.</div>
+  <div *ngIf="chatType == undefined">Chat could not be loaded.</div>
 </div>

@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { ChatType } from '../../types/chat.types';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-user-chat',
