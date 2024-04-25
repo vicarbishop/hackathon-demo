@@ -14,6 +14,6 @@ export class HomeComponent {
 
   handleSetChat(e: any) {
     debugger;
-    this.chatType = e;
+    this.chatType = ChatType.USER;
   }
 }
