@@ -1,12 +1,6 @@
 <div class="w-full h-full flex gap-x-4 justify-center">
-  <app-user-list
-    (setChat)="handleSetChat($event)"
-    class="cursor-pointer"
-  ></app-user-list>
-  <app-chat-container
-    [chatType]="chatType"
-    class="cursor-pointer"
-  ></app-chat-container>
+  <app-user-list (setChat)="handleSetChat($event)"></app-user-list>
+  <app-chat-container [chatType]="chatType"></app-chat-container>
 </div>
 
 <!--<div class="flex flex-col items-left max-w-640 px-0 py-0">
